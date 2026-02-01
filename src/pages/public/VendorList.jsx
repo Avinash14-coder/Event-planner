@@ -21,7 +21,7 @@ const VendorList = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/vendors');
+        const response = await fetch('https://event-planner-9dgd.onrender.com/api/vendors');
         const data = await response.json();
         setVendors(data);
       } catch (error) {

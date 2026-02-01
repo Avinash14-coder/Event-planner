@@ -45,7 +45,7 @@ const VendorDashboard = () => {
     const fetchMyServices = async () => {
       if (!user?._id) return;
       try {
-        const response = await fetch(`http://localhost:5000/api/vendors/my-services/${user._id}`);
+        const response = await fetch(`https://event-planner-9dgd.onrender.com/api/vendors/my-services/${user._id}`);
         const data = await response.json();
         setMyServices(data);
       } catch (error) {
@@ -78,7 +78,7 @@ const VendorDashboard = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${user._id}`, {
+      const response = await fetch(`https://event-planner-9dgd.onrender.com/api/users/${user._id}`, {
         method: 'PUT',
         body: data 
       });

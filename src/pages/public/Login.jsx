@@ -23,7 +23,7 @@ const Login = ({ onLogin }) => {
     const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/signup';
     
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`https://event-planner-9dgd.onrender.com${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, role: activeTab }),

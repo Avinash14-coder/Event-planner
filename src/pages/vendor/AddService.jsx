@@ -31,7 +31,7 @@ const AddService = () => {
     if (file) data.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/vendors', {
+      const response = await fetch('https://event-planner-9dgd.onrender.com/api/vendors', {
         method: 'POST',
         body: data // FormData
       });
