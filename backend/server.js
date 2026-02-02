@@ -12,9 +12,9 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-// Models
-const User = require('./models/User');
-const Vendor = require('./models/Vendor');
+// AFTER (New, Guaranteed working)
+const User = require('./models/UserModel');       // <--- Matches new filename
+const Vendor = require('./models/VendorModel');   // <--- Matches new filename
 
 const app = express();
 app.use(express.json());
@@ -119,6 +119,6 @@ app.get('/api/vendors/:id', async (req, res) => {
   res.json(vendor);
 });
 
-
+const PORT = 5000;
 const PORT = process.env.PORT || 5000; // <--- CHANGED
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
