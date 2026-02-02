@@ -119,6 +119,5 @@ app.get('/api/vendors/:id', async (req, res) => {
   res.json(vendor);
 });
 
-const PORT = 5000;
 const PORT = process.env.PORT || 5000; // <--- CHANGED
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
