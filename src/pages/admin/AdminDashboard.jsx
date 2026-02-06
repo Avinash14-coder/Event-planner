@@ -13,7 +13,7 @@ const AdminDashboard = () => {
       // Fetch Users
       // Note: You might need to create a route for 'GET /api/users' in backend if you haven't, 
       // but for now let's just fetch vendors since that route exists.
-      const vendorRes = await fetch('http://localhost:5000/api/vendors');
+      const vendorRes = await fetch('https://event-planner-9dgd.onrender.com/api/vendors');
       const vendorData = await vendorRes.json();
       setVendors(vendorData);
       

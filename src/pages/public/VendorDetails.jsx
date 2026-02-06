@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-// ✅ FIXED: Added CheckCircle to imports to prevent build error
 import { MapPin, Star, Phone, Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 
 const getFallbackImage = (category) => {
@@ -20,10 +19,9 @@ const VendorDetails = () => {
   useEffect(() => {
     const fetchVendor = async () => {
       try {
-        // Ensure this matches your live backend URL if deployed, or localhost if local
         const baseUrl = window.location.hostname === "localhost" 
           ? "http://localhost:5000" 
-          : "https://event-planner-api.onrender.com"; // ⚠️ Update this if your backend URL is different
+          : "https://event-planner-api.onrender.com"; 
 
         const response = await fetch(`${baseUrl}/api/vendors/${id}`);
         const data = await response.json();
@@ -46,7 +44,6 @@ const VendorDetails = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-20">
-      {/* Hero Image - Responsive Height */}
       <div className="h-[300px] md:h-[400px] w-full relative bg-gray-900">
         <img 
           src={heroImage} 
@@ -64,10 +61,10 @@ const VendorDetails = () => {
 
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
            <div className="container mx-auto">
-             <span className="bg-purple-600 text-white px-3 py-1 rounded text-xs md:text-sm font-bold uppercase tracking-wide mb-3 inline-block shadow-lg">
+             {/* Tag color */}
+             <span className="bg-[#b14e79] text-white px-3 py-1 rounded text-xs md:text-sm font-bold uppercase tracking-wide mb-3 inline-block shadow-lg">
                {vendor.type}
              </span>
-             {/* Responsive Title */}
              <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-lg">{vendor.name}</h1>
              <div className="flex flex-wrap items-center gap-4 text-sm md:text-lg opacity-90">
                <span className="flex items-center gap-1"><MapPin size={18} /> {vendor.location}</span>
@@ -77,10 +74,8 @@ const VendorDetails = () => {
         </div>
       </div>
 
-      {/* Main Content Grid: Stacks on mobile, 3 cols on desktop */}
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-10 grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
         
-        {/* Left: Description */}
         <div className="lg:col-span-2 space-y-6 md:space-y-8">
           <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">About This Service</h2>
@@ -99,13 +94,13 @@ const VendorDetails = () => {
           </div>
         </div>
 
-        {/* Right: Booking Card */}
         <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-purple-100 lg:sticky lg:top-24">
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#e0b8c9] lg:sticky lg:top-24">
             <div className="text-3xl font-bold text-gray-800 mb-1">₹{vendor.price}</div>
             <p className="text-gray-500 text-sm mb-6">Starting price per event</p>
             
-            <button className="w-full bg-purple-600 text-white font-bold py-3 md:py-4 rounded-xl hover:bg-purple-700 transition mb-4 shadow-lg shadow-purple-200">
+            {/* Book Button - Berry Blush */}
+            <button className="w-full bg-[#b14e79] text-white font-bold py-3 md:py-4 rounded-xl hover:bg-[#8e3e61] transition mb-4 shadow-lg shadow-[#b14e79]/20">
               Book Now
             </button>
             <button className="w-full border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition">
@@ -114,14 +109,15 @@ const VendorDetails = () => {
 
             <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
               <div className="flex items-center gap-3 text-gray-600">
-                 <div className="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-600"><Phone size={20}/></div>
+                 {/* Icon Background */}
+                 <div className="w-10 h-10 bg-[#f7edf2] rounded-full flex items-center justify-center text-[#8e3e61]"><Phone size={20}/></div>
                  <div>
                    <p className="text-xs text-gray-400 font-bold uppercase">Call Us</p>
                    <p className="font-bold">+91 98765 43210</p>
                  </div>
               </div>
               <div className="flex items-center gap-3 text-gray-600">
-                 <div className="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-600"><Mail size={20}/></div>
+                 <div className="w-10 h-10 bg-[#f7edf2] rounded-full flex items-center justify-center text-[#8e3e61]"><Mail size={20}/></div>
                  <div>
                    <p className="text-xs text-gray-400 font-bold uppercase">Email Us</p>
                    <p className="font-bold">contact@eventmaster.com</p>

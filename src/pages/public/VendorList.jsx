@@ -19,7 +19,6 @@ const VendorList = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        // Dynamic URL for Local vs Production
         const baseUrl = window.location.hostname === "localhost" 
           ? "http://localhost:5000" 
           : "https://event-planner-api.onrender.com"; 
@@ -43,22 +42,21 @@ const VendorList = () => {
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-[50vh]">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b14e79]"></div>
     </div>
   );
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-8 md:py-10">
       
-      {/* --- HEADER SECTION --- */}
-      {/* Flex-col on mobile (stack vertically), Flex-row on desktop (side-by-side) */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
         <div className="w-full md:w-auto">
            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Find Your Vendor</h1>
            <p className="text-gray-500 text-sm md:text-base">{filteredVendors.length} vendors available</p>
         </div>
         
-        {/* Search Bar - Full Width on Mobile */}
+        {/* Search Bar */}
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3 top-3 text-gray-400" size={18} />
           <input 
@@ -66,19 +64,19 @@ const VendorList = () => {
             placeholder="Search DJ, Lawn, etc..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none shadow-sm transition" 
+            // Ring color changed to berry blush
+            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#b14e79] outline-none shadow-sm transition" 
           />
         </div>
       </div>
 
-      {/* --- GRID SECTION --- */}
+      {/* Grid */}
       {filteredVendors.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
           <Filter className="mx-auto text-gray-300 mb-3" size={48} />
           <p className="text-xl text-gray-400">No vendors found matching your search.</p>
         </div>
       ) : (
-        // Grid: 1 col (Mobile) -> 2 cols (Tablet) -> 3 cols (Desktop)
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredVendors.map((vendor) => {
             const imageUrl = (vendor.images && vendor.images.length > 0 && vendor.images[0]) 
@@ -96,16 +94,16 @@ const VendorList = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                     onError={(e) => { e.target.onerror = null; e.target.src = getFallbackImage(vendor.type); }} 
                   />
-                  <div className="absolute top-3 right-3 bg-white/95 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold text-purple-700 shadow-sm uppercase tracking-wider">
+                  <div className="absolute top-3 right-3 bg-white/95 backdrop-blur px-3 py-1 rounded-lg text-xs font-bold text-[#8e3e61] shadow-sm uppercase tracking-wider">
                     {vendor.type}
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-5 md:p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg md:text-xl font-bold text-gray-800 line-clamp-1 group-hover:text-purple-600 transition">{vendor.name}</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 line-clamp-1 group-hover:text-[#b14e79] transition">{vendor.name}</h3>
                   <div className="flex items-center text-gray-500 text-sm mb-4 gap-1 mt-2">
-                    <MapPin size={16} className="text-purple-400" /> {vendor.location}
+                    <MapPin size={16} className="text-[#d095af]" /> {vendor.location}
                   </div>
                   
                   <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-auto">
@@ -119,7 +117,7 @@ const VendorList = () => {
 
                   <Link 
                     to={`/vendors/${vendor._id}`} 
-                    className="block w-full text-center mt-5 bg-gray-50 text-purple-700 py-3 rounded-xl font-bold hover:bg-purple-600 hover:text-white transition shadow-sm hover:shadow-md"
+                    className="block w-full text-center mt-5 bg-[#f7edf2] text-[#8e3e61] py-3 rounded-xl font-bold hover:bg-[#b14e79] hover:text-white transition shadow-sm hover:shadow-md"
                   >
                     View Details
                   </Link>
