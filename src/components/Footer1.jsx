@@ -14,15 +14,7 @@ const Footer1 = () => {
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8 border-t border-gray-800 mt-auto">
       <div className="container mx-auto px-6">
-<<<<<<< Updated upstream
-        
-        {/* Grid: 1 col (Mobile) -> 2 cols (Tablet) -> 4 cols (Desktop) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 text-center md:text-left">
-          
-          {/* Brand */}
-=======
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 text-center md:text-left">
->>>>>>> Stashed changes
           <div className="col-span-1 sm:col-span-2">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center md:justify-start gap-2">
               EventMaster
@@ -34,15 +26,9 @@ const Footer1 = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
             <ul className="space-y-3 text-gray-400">
-<<<<<<< Updated upstream
-              <li><a href="/" className="hover:text-purple-400 transition block py-1">Home</a></li>
-              <li><a href="/vendors" className="hover:text-purple-400 transition block py-1">Find Vendors</a></li>
-              <li><a href="/login" className="hover:text-purple-400 transition block py-1">Vendor Login</a></li>
-=======
               <li>
                 <a
                   href="/"
@@ -67,11 +53,9 @@ const Footer1 = () => {
                   Vendor Login
                 </a>
               </li>
->>>>>>> Stashed changes
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-lg font-bold text-white mb-4">Contact Us</h3>
             <ul className="space-y-3 text-gray-400">
@@ -85,14 +69,6 @@ const Footer1 = () => {
                 <Mail size={16} /> support@eventmaster.com
               </li>
             </ul>
-<<<<<<< Updated upstream
-            
-            {/* Social Icons */}
-            <div className="flex gap-4 mt-6 justify-center md:justify-start">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition hover:-translate-y-1"><Facebook size={18}/></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition hover:-translate-y-1"><Instagram size={18}/></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition hover:-translate-y-1"><Twitter size={18}/></a>
-=======
 
             <div className="flex gap-4 mt-6 justify-center md:justify-start">
               <a
@@ -113,20 +89,13 @@ const Footer1 = () => {
               >
                 <Twitter size={18} />
               </a>
->>>>>>> Stashed changes
             </div>
           </div>
         </div>
 
-        {/* Horizontal Line */}
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
           <p>© 2026 EventMaster. All rights reserved.</p>
-<<<<<<< Updated upstream
-          
-          {/* Developer Credit */}
-=======
 
->>>>>>> Stashed changes
           <p className="flex items-center gap-1">
             Developed with{" "}
             <Heart
