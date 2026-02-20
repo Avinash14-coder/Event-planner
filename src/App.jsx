@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast'; // <--- NEW: For Beautiful Alerts
+import { Toaster } from 'react-hot-toast'; 
 
 // --- LAYOUTS ---
 import PublicLayout from './layouts/PublicLayout';       
@@ -64,19 +64,21 @@ function App() {
           <Route path="/vendors" element={<VendorList />} />
           <Route path="/vendors/:id" element={<VendorDetails />} />
           
-          {/* USER PROFILE (Protected: Only for 'user' role) */}
+          {/* USER PROFILE (Protected: Only for 'user' role) 
+              FIXED: Path is now exactly "/user/profile" to match the Navbar */}
           <Route path="/user/profile" element={
             user && user.role === 'user' ? <UserProfile user={user} /> : <Navigate to="/login" />
           } />
 
-          {/* LOGIN PAGE (With Smart Redirect) */}
+          {/* LOGIN PAGE (With Smart Redirect) 
+              FIXED: Standard users are now redirected to "/user/profile" */}
           <Route path="/login" element={
             user ? (
               // If already logged in, redirect based on role
               <Navigate to={
                 user.role === 'vendor' ? "/vendor/dashboard" : 
                 user.role === 'admin' ? "/admin/dashboard" : 
-                "/vendors" // Users go to the service list to shop
+                "/user/profile" // <--- FIXED HERE
               } />
             ) : (
               <Login onLogin={handleLogin} />
