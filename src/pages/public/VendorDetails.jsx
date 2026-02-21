@@ -21,7 +21,7 @@ const VendorDetails = () => {
       try {
         const baseUrl = window.location.hostname === "localhost" 
           ? "http://localhost:5000" 
-          : "https://event-planner-api.onrender.com"; 
+          : "https://event-planner-9dgd.onrender.com"; // ⚠️ Update this if your backend URL is different
 
         const response = await fetch(`${baseUrl}/api/vendors/${id}`);
         const data = await response.json();
