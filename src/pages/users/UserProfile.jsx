@@ -31,7 +31,7 @@ const UserProfile = ({ user }) => {
 
   const baseUrl = window.location.hostname === "localhost" 
     ? "http://localhost:5000" 
-    : "https://event-planner-api.onrender.com";
+    : "https://event-planner-9dgd.onrender.com";
 
   // --- HANDLE IMAGE UPLOAD ---
   const handleImageUpload = async (e) => {
