@@ -5,9 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-<<<<<<< Updated upstream
     extend: {},
-=======
     extend: {
       colors: {
         // MAKE SURE THIS BLOCK IS HERE 👇
@@ -27,7 +25,6 @@ export default {
         }
       }
     },
->>>>>>> Stashed changes
   },
   plugins: [],
 }

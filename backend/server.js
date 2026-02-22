@@ -12,9 +12,15 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-// AFTER (New, Guaranteed working)
-const User = require('./models/UserModel');       // <--- Matches new filename
-const Vendor = require('./models/VendorModel');   // <--- Matches new filename
+// --- IMPORT MODELS ---
+// Using try/catch to handle both new and old naming conventions automatically
+try {
+  var User = require('./models/UserModel'); 
+  var Vendor = require('./models/VendorModel');
+} catch (err) {
+  var User = require('./models/User');
+  var Vendor = require('./models/Vendor');
+}
 
 const app = express();
 app.use(express.json());
@@ -35,11 +41,6 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
-
-// --- DATABASE ---
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log(err));
 
 // --- AUTH ROUTES ---
 app.post('/api/auth/signup', async (req, res) => {
@@ -119,5 +120,19 @@ app.get('/api/vendors/:id', async (req, res) => {
   res.json(vendor);
 });
 
-const PORT = process.env.PORT || 5000; // <--- CHANGED
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+// --- DB CONNECTION & SERVER START (FIXED FOR RENDER) ---
+const PORT = process.env.PORT || 5000;
+
+// 1. Connect to MongoDB FIRST
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected Successfully");
+    
+    // 2. ONLY start the server if DB connects (Prevents timeout/buffering errors)
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Error:", err);
+  });
