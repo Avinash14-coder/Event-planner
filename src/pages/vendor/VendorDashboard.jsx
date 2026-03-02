@@ -32,6 +32,11 @@ const VendorDashboard = () => {
     phone: user?.phone || ''
   });
 
+  // DYNAMIC URL SETUP (Ensures it talks to your local backend when testing)
+  const baseUrl = window.location.hostname === "localhost" 
+    ? "http://localhost:5000" 
+    : "https://event-planner-9dgd.onrender.com";
+
   // Sync state when user changes (e.g. after save)
   useEffect(() => {
     if (user) {
@@ -45,7 +50,7 @@ const VendorDashboard = () => {
     const fetchMyServices = async () => {
       if (!user?._id) return;
       try {
-        const response = await fetch(`https://event-planner-9dgd.onrender.com/api/vendors/my-services/${user._id}`);
+        const response = await fetch(`${baseUrl}/api/vendors/my-services/${user._id}`);
         const data = await response.json();
         setMyServices(data);
       } catch (error) {
@@ -55,7 +60,7 @@ const VendorDashboard = () => {
       }
     };
     fetchMyServices();
-  }, []);
+  }, [user?._id, baseUrl]);
 
   // Handle File Selection (Live Preview)
   const handleFileChange = (e) => {
@@ -78,7 +83,7 @@ const VendorDashboard = () => {
     }
 
     try {
-      const response = await fetch(`https://event-planner-9dgd.onrender.com/api/users/${user._id}`, {
+      const response = await fetch(`${baseUrl}/api/users/${user._id}`, {
         method: 'PUT',
         body: data 
       });
@@ -110,10 +115,27 @@ const VendorDashboard = () => {
     }
   };
 
+  // --- DELETE SERVICE LOGIC ---
   const handleDeleteService = async (id) => {
-    if(!confirm("Delete this service?")) return;
-    setMyServices(myServices.filter(s => s._id !== id));
-    toast.success("Service removed.");
+    if(!confirm("Are you sure you want to permanently delete this service?")) return;
+    
+    try {
+      const response = await fetch(`${baseUrl}/api/vendors/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        setMyServices(myServices.filter(s => s._id !== id));
+        toast.success("Service permanently removed.");
+      } else {
+        // Super Debugging
+        const errorText = await response.text();
+        console.error("Delete Error:", errorText);
+        toast.error(`Delete Failed (${response.status}). Make sure local backend is running!`);
+      }
+    } catch (error) {
+      toast.error("Server Error while deleting. Is your backend on?");
+    }
   };
 
   return (

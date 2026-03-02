@@ -66,7 +66,8 @@ app.post('/api/auth/login', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// --- USER ROUTES (With Fixed URL Generation) ---
+
+// --- USER ROUTES ---
 app.put('/api/users/:id', upload.single('profilePic'), async (req, res) => {
   try {
     let updateData = req.body;
@@ -80,6 +81,17 @@ app.put('/api/users/:id', upload.single('profilePic'), async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json(updatedUser);
   } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// NEW: GET ALL USERS (For Admin Dashboard)
+app.get('/api/users', async (req, res) => {
+  try {
+    // .select('-password') ensures we never send passwords to the frontend
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (err) { 
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 // --- VENDOR ROUTES ---
@@ -104,8 +116,10 @@ app.post('/api/vendors', upload.single('image'), async (req, res) => {
 });
 
 app.get('/api/vendors', async (req, res) => {
-  const vendors = await Vendor.find();
-  res.json(vendors);
+  try {
+    const vendors = await Vendor.find();
+    res.json(vendors);
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.get('/api/vendors/my-services/:ownerId', async (req, res) => {
@@ -116,8 +130,20 @@ app.get('/api/vendors/my-services/:ownerId', async (req, res) => {
 });
 
 app.get('/api/vendors/:id', async (req, res) => {
-  const vendor = await Vendor.findById(req.params.id);
-  res.json(vendor);
+  try {
+    const vendor = await Vendor.findById(req.params.id);
+    res.json(vendor);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// NEW: DELETE VENDOR (For Admin Dashboard)
+app.delete('/api/vendors/:id', async (req, res) => {
+  try {
+    await Vendor.findByIdAndDelete(req.params.id);
+    res.json({ message: "Vendor deleted successfully" });
+  } catch (err) { 
+    res.status(500).json({ error: err.message }); 
+  }
 });
 
 // --- DB CONNECTION & SERVER START (FIXED FOR RENDER) ---
