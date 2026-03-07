@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { MapPin, Star, Phone, Mail, ArrowLeft, CheckCircle } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { MapPin, Star, Phone, Mail, ArrowLeft, CheckCircle, Heart, Share2 } from 'lucide-react';
 
 const getFallbackImage = (category) => {
   const cat = category?.toLowerCase().trim();
-  if (cat === 'dj') return "https://images.unsplash.com/photo-1571266028243-371695039980?auto=format&fit=crop&q=80&w=1200";
-  if (cat === 'catering') return "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=1200";
-  if (cat === 'lawn') return "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=1200";
-  if (cat === 'photographer') return "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=1200";
-  return "https://images.unsplash.com/photo-1514525253440-b39345208668?auto=format&fit=crop&q=80&w=1200";
+  if (cat === 'dj') return "https://images.unsplash.com/photo-1571266028243-371695039980?q=80&w=1200";
+  if (cat === 'catering') return "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200";
+  if (cat === 'lawn') return "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200";
+  if (cat === 'photographer') return "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200";
+  return "https://images.unsplash.com/photo-1514525253440-b39345208668?q=80&w=1200";
 };
 
 const VendorDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [vendor, setVendor] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +22,7 @@ const VendorDetails = () => {
       try {
         const baseUrl = window.location.hostname === "localhost" 
           ? "http://localhost:5000" 
-          : "https://event-planner-9dgd.onrender.com"; // ⚠️ Update this if your backend URL is different
+          : "https://event-planner-9dgd.onrender.com";
 
         const response = await fetch(`${baseUrl}/api/vendors/${id}`);
         const data = await response.json();
@@ -35,98 +36,84 @@ const VendorDetails = () => {
     fetchVendor();
   }, [id]);
 
-  if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (!vendor) return <div className="text-center py-20">Vendor not found</div>;
+  if (loading) return <div className="min-h-screen bg-[#05070a] flex items-center justify-center text-[#b14e79] font-bold">Curating Details...</div>;
+  if (!vendor) return <div className="min-h-screen bg-[#05070a] flex items-center justify-center text-white">Vendor not found</div>;
 
-  const heroImage = (vendor.images && vendor.images.length > 0 && vendor.images[0]) 
-    ? vendor.images[0] 
-    : getFallbackImage(vendor.type);
+  const heroImage = (vendor.images && vendor.images.length > 0) ? vendor.images[0] : getFallbackImage(vendor.type);
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-20">
-      <div className="h-[300px] md:h-[400px] w-full relative bg-gray-900">
+    <div className="bg-[#05070a] min-h-screen text-white pb-20">
+      {/* --- PREMIUM HERO --- */}
+      <div className="h-[50vh] md:h-[65vh] w-full relative overflow-hidden">
         <img 
           src={heroImage} 
-          alt={vendor.name} 
-          className="w-full h-full object-cover opacity-80"
-          onError={(e) => { e.target.onerror = null; e.target.src = getFallbackImage(vendor.type); }}
+          className="w-full h-full object-cover scale-105 animate-slow-zoom"
+          alt={vendor.name}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#05070a] via-[#05070a]/40 to-transparent"></div>
         
-        <div className="absolute top-6 left-6">
-           <Link to="/vendors" className="bg-white/20 backdrop-blur text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-white/30 transition border border-white/30">
-             <ArrowLeft size={20} /> Back
-           </Link>
-        </div>
-
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-           <div className="container mx-auto">
-             {/* Tag color */}
-             <span className="bg-[#b14e79] text-white px-3 py-1 rounded text-xs md:text-sm font-bold uppercase tracking-wide mb-3 inline-block shadow-lg">
-               {vendor.type}
-             </span>
-             <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-lg">{vendor.name}</h1>
-             <div className="flex flex-wrap items-center gap-4 text-sm md:text-lg opacity-90">
-               <span className="flex items-center gap-1"><MapPin size={18} /> {vendor.location}</span>
-               <span className="flex items-center gap-1 text-yellow-400 font-bold"><Star size={18} fill="currentColor" /> {vendor.rating || 4.5} (24 Reviews)</span>
-             </div>
-           </div>
+        <div className="absolute top-8 left-8 flex gap-4 z-20">
+          <button onClick={() => navigate(-1)} className="bg-black/40 backdrop-blur-md p-3 rounded-full hover:bg-[#b14e79] transition-all"><ArrowLeft size={24}/></button>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-10 grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
-        
-        <div className="lg:col-span-2 space-y-6 md:space-y-8">
-          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">About This Service</h2>
-            <p className="text-gray-600 leading-relaxed text-lg">{vendor.description}</p>
-          </div>
-
-          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">Amenities & Features</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-               {["Instant Booking", "Verified Vendor", "Best Price Guarantee", "24/7 Support"].map((item, i) => (
-                 <div key={i} className="flex items-center gap-3 text-gray-700 bg-gray-50 p-3 rounded-lg">
-                   <CheckCircle className="text-green-500" size={20} /> {item}
-                 </div>
-               ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#e0b8c9] lg:sticky lg:top-24">
-            <div className="text-3xl font-bold text-gray-800 mb-1">₹{vendor.price}</div>
-            <p className="text-gray-500 text-sm mb-6">Starting price per event</p>
+      {/* --- CONTENT SECTION --- */}
+      <div className="max-w-6xl mx-auto px-6 -mt-24 relative z-10">
+        <div className="bg-[#111622] rounded-[3rem] p-8 md:p-12 border border-white/5 shadow-2xl">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
             
-            {/* Book Button - Berry Blush */}
-            <button className="w-full bg-[#b14e79] text-white font-bold py-3 md:py-4 rounded-xl hover:bg-[#8e3e61] transition mb-4 shadow-lg shadow-[#b14e79]/20">
-              Book Now
-            </button>
-            <button className="w-full border-2 border-gray-200 text-gray-700 font-bold py-3 rounded-xl hover:bg-gray-50 transition">
-              Send Enquiry
-            </button>
-
-            <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
-              <div className="flex items-center gap-3 text-gray-600">
-                 {/* Icon Background */}
-                 <div className="w-10 h-10 bg-[#f7edf2] rounded-full flex items-center justify-center text-[#8e3e61]"><Phone size={20}/></div>
-                 <div>
-                   <p className="text-xs text-gray-400 font-bold uppercase">Call Us</p>
-                   <p className="font-bold">+91 98765 43210</p>
-                 </div>
+            <div className="flex-1">
+              <span className="bg-[#b14e79]/20 text-[#b14e79] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-[0.2em] border border-[#b14e79]/20">
+                {vendor.type}
+              </span>
+              <h1 className="text-4xl md:text-6xl font-black mt-6 mb-4 tracking-tighter">{vendor.name}</h1>
+              
+              <div className="flex flex-wrap gap-6 text-gray-400 mb-8 font-medium">
+                <div className="flex items-center gap-2"><MapPin size={20} className="text-[#b14e79]"/> {vendor.location}</div>
+                <div className="flex items-center gap-2 text-yellow-500 font-bold"><Star size={20} fill="currentColor"/> {vendor.rating || 4.5} (Verified)</div>
               </div>
-              <div className="flex items-center gap-3 text-gray-600">
-                 <div className="w-10 h-10 bg-[#f7edf2] rounded-full flex items-center justify-center text-[#8e3e61]"><Mail size={20}/></div>
-                 <div>
-                   <p className="text-xs text-gray-400 font-bold uppercase">Email Us</p>
-                   <p className="font-bold">contact@eventmaster.com</p>
-                 </div>
+
+              <div className="border-t border-white/5 pt-8">
+                <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">Experience Description</h3>
+                <p className="text-gray-400 leading-relaxed text-lg">{vendor.description}</p>
               </div>
             </div>
+
+            {/* Booking Card */}
+            <div className="bg-[#0a0d14] p-8 rounded-[2.5rem] border border-white/5 w-full lg:w-96 shadow-2xl">
+              <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-center">Starting Experience From</p>
+              <h2 className="text-5xl font-black text-white text-center mb-8 tracking-tighter">₹{vendor.price}</h2>
+              
+              <button className="w-full bg-[#b14e79] hover:bg-[#8e3e61] text-white py-5 rounded-2xl font-bold shadow-xl shadow-[#b14e79]/20 transition-all active:scale-95 mb-4">
+                Reserve Date
+              </button>
+              <button className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
+                Check Availability
+              </button>
+
+              <div className="mt-8 pt-8 border-t border-white/5 space-y-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#b14e79]/10 rounded-2xl flex items-center justify-center text-[#b14e79]"><Phone size={22}/></div>
+                  <div>
+                    <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Inquiry Line</p>
+                    <p className="font-bold text-gray-200">+91 98765 43210</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Features Grid */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {["Verified Elite", "Best Rate", "Concierge Support", "Instant Sync"].map((f, i) => (
+              <div key={i} className="flex items-center gap-4 bg-white/5 p-5 rounded-3xl border border-white/5">
+                <CheckCircle className="text-[#b14e79]" size={24} />
+                <span className="font-bold text-gray-300 text-sm tracking-tight">{f}</span>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     </div>
   );

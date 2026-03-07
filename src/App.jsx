@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast'; 
 
 // --- LAYOUTS ---
-import PublicLayout from './layouts/PublicLayout';       
+import PublicLayout from './layouts/PublicLayout';        
 import DashboardLayout from './layouts/DashboardLayout'; 
 
 // --- PUBLIC PAGES ---
 import Home from './pages/public/Home';
-import VendorList from './pages/public/VendorList';
-import VendorDetails from './pages/public/VendorDetails';
 import Login from './pages/public/Login';
+import CategoryHub from './pages/public/CategoryHub';          // Level 1: Category Hub
+import SubCategoryListing from './pages/public/SubCategoryListing'; // Level 2: Sub-category List
+import VendorDetails from './pages/public/VendorDetails';    // Final Level: Details
 
 // --- USER PAGES ---
 import UserProfile from './pages/users/UserProfile';
@@ -23,10 +24,8 @@ import AddService from './pages/vendor/AddService';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
-  // State to hold current logged-in user info
   const [user, setUser] = useState(null);
 
-  // 1. Check LocalStorage on Load (Keep user logged in on refresh)
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -34,13 +33,11 @@ function App() {
     }
   }, []);
 
-  // 2. Login Handler
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  // 3. Logout Handler
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('user');
@@ -48,37 +45,36 @@ function App() {
 
   return (
     <Router>
-      {/* GLOBAL TOAST NOTIFICATIONS (Popups) */}
       <Toaster position="top-center" reverseOrder={false} />
 
       <Routes>
-        
         {/* =========================================================
             PUBLIC LAYOUT ROUTES 
-            (Navbar + Footer logic handled inside PublicLayout) 
            ========================================================= */}
         <Route element={<PublicLayout user={user} onLogout={handleLogout} />}>
           
-          {/* General Pages */}
           <Route path="/" element={<Home />} />
-          <Route path="/vendors" element={<VendorList />} />
+          
+          {/* LEVEL 1: e.g., /category/birthday -> Shows the Birthday Hub page */}
+          <Route path="/category/:categoryName" element={<CategoryHub />} />
+
+          {/* LEVEL 2: e.g., /category/birthday/services/cakeshop -> Shows Cake Shops */}
+          <Route path="/category/:categoryName/services/:serviceType" element={<SubCategoryListing />} />
+
+          {/* FINAL LEVEL: Single Vendor Details */}
           <Route path="/vendors/:id" element={<VendorDetails />} />
           
-          {/* USER PROFILE (Protected: Only for 'user' role) 
-              FIXED: Path is now exactly "/user/profile" to match the Navbar */}
+          {/* Protected User Profile */}
           <Route path="/user/profile" element={
             user && user.role === 'user' ? <UserProfile user={user} /> : <Navigate to="/login" />
           } />
 
-          {/* LOGIN PAGE (With Smart Redirect) 
-              FIXED: Standard users are now redirected to "/user/profile" */}
           <Route path="/login" element={
             user ? (
-              // If already logged in, redirect based on role
               <Navigate to={
                 user.role === 'vendor' ? "/vendor/dashboard" : 
                 user.role === 'admin' ? "/admin/dashboard" : 
-                "/user/profile" // <--- FIXED HERE
+                "/user/profile"
               } />
             ) : (
               <Login onLogin={handleLogin} />
@@ -87,8 +83,7 @@ function App() {
         </Route>
 
         {/* =========================================================
-            VENDOR DASHBOARD ROUTES 
-            (Sidebar Layout) - Only for Vendors 
+            VENDOR DASHBOARD ROUTES (Protected)
            ========================================================= */}
         <Route path="/vendor" element={
           user && user.role === 'vendor' ? (
@@ -102,8 +97,7 @@ function App() {
         </Route>
 
         {/* =========================================================
-            ADMIN DASHBOARD ROUTES 
-            (Sidebar Layout) - Only for Admins 
+            ADMIN DASHBOARD ROUTES (Protected)
            ========================================================= */}
         <Route path="/admin" element={
           user && user.role === 'admin' ? (
@@ -115,7 +109,7 @@ function App() {
            <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
 
-        {/* Catch-all: Redirect unknown URLs to Home */}
+        {/* Catch-all Redirect */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

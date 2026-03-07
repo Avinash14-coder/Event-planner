@@ -1,99 +1,143 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Search, Star, ShieldCheck, Heart } from 'lucide-react';
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import { Star, ShieldCheck, Heart, ChevronRight } from "lucide-react";
 
 const Home = () => {
-  const heroWallpapers = [
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2000&auto=format&fit=crop", 
-    "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2000&auto=format&fit=crop",
-  ];
-  const [currentHero, setCurrentHero] = useState(heroWallpapers[0]);
+  const categoriesRef = useRef(null);
 
-  const categories = [
-    { name: "DJs & Music", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop", link: "/vendors?type=dj" },
-    { name: "Marriage Halls", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop", link: "/vendors?type=lawn" },
-    { name: "Photographers", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop", link: "/vendors?type=photographer" },
-    { name: "Catering", image: "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=800&auto=format&fit=crop", link: "/vendors?type=catering" }
+  const scrollToCategories = () => {
+    categoriesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const CATEGORIES = [
+    {
+      title: "Wedding Day",
+      img: "https://www.shaadidukaan.com/vogue/wp-content/uploads/2025/06/Post-Wedding-Rituals-11.webp",
+      path: "/category/wedding", // Updated from /wedding-day
+    },
+    {
+      title: "Birthday Party",
+      img: "https://media.istockphoto.com/id/1154066614/photo/happy-birthday-to-you-concept.jpg?s=612x612&w=0&k=20&c=laWMYxECOwx3R9pB07O2Ip11IRa_y-LdsUzO99BmqSk=",
+      path: "/category/birthday", // Updated from /birthday
+    },
+    {
+      title: "Reception Party",
+      img: "https://img.freepik.com/premium-photo/evening-wedding-family-dinner-forest-with-light-bulbs-candles_419896-17590.jpg",
+      path: "/category/reception", // Updated from /reception
+    },
+    {
+      title: "Anniversary",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EyYWR9CsuN1R7fKaCkbGsg1UmlXGRblHOA&s",
+      path: "/category/anniversary", // Updated from /anniversary
+    },
+    {
+      title: "Bachelor Party",
+      img: "https://media.istockphoto.com/id/1174587136/photo/group-of-smiling-male-friends-having-fun-in-night-club.jpg?s=612x612&w=0&k=20&c=4fCPHPdTtTra9L_qhFuQ7BhfdZ1J_n4mvohgb_ZPiU4=",
+      path: "/category/bachelor", // Updated from /bachelorparty
+    },
+    {
+      title: "DJ ",
+      img: "https://t3.ftcdn.net/jpg/08/52/83/82/360_F_852838243_bHrOKN6lJWajcpfRqvrskAPuZO5VheDZ.jpg",
+      path: "/category/dj",
+    },
   ];
 
   return (
-    <div>
-      {/* HERO SECTION */}
-      <div className="relative min-h-[550px] md:h-[650px] flex items-center justify-center text-center px-4 overflow-hidden">
+    <div className="bg-[#05070a] text-white min-h-screen">
+      {/* --- RESPONSIVE HERO SECTION --- */}
+      <section className="relative w-full h-[85vh] md:h-screen overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
-          <img src={currentHero} alt="Background" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+          <img
+            className="w-full h-full object-cover scale-105 animate-slow-zoom"
+            alt="Luxury gala event"
+            src="https://images.pexels.com/photos/30311728/pexels-photo-30311728.jpeg"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#05070a] via-[#05070a]/50 to-transparent"></div>
         </div>
 
-        <div className="relative z-10 text-white max-w-4xl py-10">
-          {/* Tag: Using explicit hex color #b14e79 */}
-          <span className="bg-[#b14e79]/90 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block shadow-lg border border-[#c17194]">
-            Plan Your Dream Event
-          </span>
-          <h1 className="text-4xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-2xl">
-            Moments That Last <br/>
-            {/* Gradient Text: Using explicit hex colors */}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d095af] to-pink-200">Forever</span>
-          </h1>
-          <p className="text-base md:text-2xl text-gray-100 mb-8 max-w-2xl mx-auto leading-relaxed px-4 opacity-90">
-            Find the perfect vendors for your Wedding, Birthday, or Corporate Event in Nashik.
-          </p>
-          
-          <div className="flex flex-col md:flex-row gap-4 justify-center px-6">
-            {/* Find Vendors Button: explicit #b14e79 */}
-            <Link to="/vendors" className="bg-[#b14e79] hover:bg-[#8e3e61] text-white w-full md:w-auto px-8 py-4 rounded-full font-bold text-lg transition flex items-center justify-center gap-2 shadow-xl shadow-[#231018]/20">
-              <Search size={20}/> Find Vendors
+        <div className="relative z-10 w-full px-6 md:px-20 lg:px-32">
+          <div className="flex flex-col gap-4 md:gap-6">
+            <span className="inline-block px-4 py-1.5 md:px-6 md:py-2 bg-yellow-400/10 backdrop-blur-md text-yellow-500 border border-yellow-500/20 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.2em] w-fit">
+              Premium Experience
+            </span>
+
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-tight tracking-tighter">
+              Plan Your <br />
+              <span className="text-[#b14e79] italic font-serif">Dream</span> Event
+            </h1>
+
+            <p className="text-gray-300 text-sm md:text-lg max-w-lg leading-relaxed font-medium">
+              Access the world's most exclusive venues and elite planning services, tailored specifically for your vision.
+            </p>
+
+            <div className="pt-4">
+              <button 
+                onClick={scrollToCategories}
+                className="w-full sm:w-auto bg-[#b14e79] hover:bg-[#8e3e61] text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-base md:text-lg shadow-2xl transition-all flex items-center justify-center gap-3 active:scale-95"
+              >
+                Start Planning
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- CATEGORIES SECTION --- */}
+      <section ref={categoriesRef} className="py-12 md:py-20 bg-[#05070a] px-6 md:px-20 lg:px-32">
+        <div className="flex items-center justify-between mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight">
+            Curated Categories
+          </h2>
+          <button className="hidden sm:block text-sm font-bold text-[#b14e79] hover:underline uppercase tracking-widest">
+            VIEW ALL
+          </button>
+        </div>
+
+        {/* Responsive Grid - 1 column mobile, 2 tablet, 3 desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+          {CATEGORIES.map((cat, i) => (
+            <Link key={i} to={cat.path} className="group block h-[300px] md:h-[450px]">
+              <div className="relative h-full w-full rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/5 transition-all duration-500 group-hover:border-[#b14e79]/50">
+                <img
+                  className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  alt={cat.title}
+                  src={cat.img}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70"></div>
+                <h3 className="absolute bottom-6 left-6 md:bottom-8 md:left-8 font-bold text-xl md:text-2xl tracking-tight">
+                  {cat.title}
+                </h3>
+              </div>
             </Link>
-            {/* Join Button: Text color #6a2f49 */}
-            <Link to="/login" className="bg-white hover:bg-gray-50 text-[#6a2f49] w-full md:w-auto px-8 py-4 rounded-full font-bold text-lg transition flex items-center justify-center gap-2 shadow-lg">
-              Join as Vendor <ArrowRight size={20}/>
-            </Link>
-          </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* CATEGORIES SECTION */}
-      <div className="py-16 bg-[#f7edf2]/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-3">Explore Services</h2>
-            {/* Underline: explicit #b14e79 */}
-            <div className="w-16 h-1.5 bg-[#b14e79] mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {categories.map((cat, index) => (
-              <Link to={cat.link} key={index} className="group relative rounded-2xl overflow-hidden h-64 shadow-lg cursor-pointer transform hover:-translate-y-2 transition duration-300">
-                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#190b11]/80 via-transparent to-transparent flex flex-col justify-end p-6">
-                  <h3 className="text-white text-xl font-bold group-hover:text-[#e0b8c9] transition">{cat.name}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* FEATURES SECTION */}
-      <div className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-             {[ 
-              { icon: ShieldCheck, title: "Verified Vendors", desc: "Every vendor is personally verified for quality." },
+      {/* --- RESPONSIVE FEATURES --- */}
+      <section className="py-16 md:py-24 bg-[#0a0d14] border-t border-white/5">
+        <div className="px-6 md:px-20 lg:px-32">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+            {[
+              { icon: ShieldCheck, title: "Verified Vendors", desc: "Every vendor is personally verified for luxury-grade service." },
               { icon: Star, title: "Transparent Pricing", desc: "No hidden costs. Compare rates within your budget." },
-              { icon: Heart, title: "Stress-Free Planning", desc: "We make planning your big day simple and smooth." }
+              { icon: Heart, title: "Stress-Free Planning", desc: "We make planning your big day simple and smooth." },
             ].map((feature, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-lg transition">
-                <div className="w-16 h-16 bg-[#efdce4] rounded-2xl flex items-center justify-center text-[#8e3e61] mx-auto mb-6 transform rotate-3 group-hover:rotate-6 transition">
-                  <feature.icon size={32} />
+              <div key={i} className="p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-[#111622] border border-white/5 hover:bg-[#161d2b] transition-colors group">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-[#b14e79]/10 rounded-2xl flex items-center justify-center text-[#b14e79] mx-auto mb-6 md:mb-8 transition-transform group-hover:rotate-6">
+                  <feature.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-800">{feature.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{feature.desc}</p>
+                <h4 className="text-lg md:text-xl font-black mb-3 md:mb-4 uppercase tracking-tight text-white">
+                  {feature.title}
+                </h4>
+                <p className="text-gray-500 text-sm leading-relaxed">
+                  {feature.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
