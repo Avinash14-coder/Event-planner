@@ -1,1 +1,22 @@
-// ============================================\n// FILE UPLOAD MIDDLEWARE\n// ============================================\n\nconst multer = require('multer');\nconst path = require('path');\nconst fs = require('fs');\n\n// --- ENSURE UPLOADS DIRECTORY EXISTS ---\nconst uploadDir = path.join(__dirname, '../uploads');\nif (!fs.existsSync(uploadDir)) {\n  fs.mkdirSync(uploadDir);\n}\n\n// --- STORAGE CONFIGURATION ---\nconst storage = multer.diskStorage({\n  destination: function (req, file, cb) {\n    cb(null, path.join(__dirname, '../uploads/'));\n  },\n  filename: function (req, file, cb) {\n    // Replace spaces with underscores to prevent broken URLs\n    const safeName = file.originalname.replace(/\\s+/g, '_');\n    cb(null, Date.now() + '-' + safeName);\n  }\n});\n\nconst upload = multer({ storage });\n\nmodule.exports = upload;
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const safeName = file.originalname.replace(/\s+/g, '_');
+    cb(null, Date.now() + '-' + safeName);
+  }
+});
+
+const upload = multer({ storage });
+
+module.exports = upload;
