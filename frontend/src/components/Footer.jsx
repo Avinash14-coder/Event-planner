@@ -16,7 +16,7 @@ const Footer = () => {
             </h2>
             <p className="text-gray-400 leading-relaxed max-w-sm mx-auto md:mx-0">
               Your one-stop destination for planning the perfect wedding, corporate event, or birthday party. We connect you
-              with the best vendors in Nashik.
+              with the best vendors in Pune.
             </p>
           </div>
 

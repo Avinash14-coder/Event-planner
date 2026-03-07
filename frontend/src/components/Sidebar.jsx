@@ -20,28 +20,28 @@ const Sidebar = ({ role, user, onLogout }) => {
   const links = role === 'vendor' ? vendorLinks : adminLinks;
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-full shadow-sm">
+    <div className="w-64 dark:bg-[#111622] bg-white border-r dark:border-white/10 border-gray-300 flex flex-col h-full shadow-sm transition-colors duration-300">
       {/* --- HEADER --- */}
-      <div className="p-6 border-b border-gray-100 flex items-center gap-2">
-        <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+      <div className="p-6 border-b dark:border-white/10 border-gray-300 flex items-center gap-2 transition-colors duration-300">
+        <div className="w-8 h-8 bg-[#b14e79] rounded-lg flex items-center justify-center text-white font-bold">
           {role === 'vendor' ? 'V' : 'A'}
         </div>
-        <span className="text-xl font-bold text-gray-800">
+        <span className="text-xl font-bold dark:text-white text-gray-900">
           {role === 'vendor' ? 'Vendor Panel' : 'Admin Panel'}
         </span>
       </div>
 
       {/* --- USER PROFILE INFO --- */}
       <div className="p-6 pb-2">
-        <div className="flex items-center gap-3 mb-6 bg-gray-50 p-3 rounded-xl border border-gray-100">
+        <div className="flex items-center gap-3 mb-6 dark:bg-[#0a0d14] bg-gray-50 p-3 rounded-xl border dark:border-white/10 border-gray-300 transition-colors duration-300">
           <img
             src={user?.profilePic || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}
             alt="Profile"
-            className="w-10 h-10 rounded-full object-cover border border-gray-200"
+            className="w-10 h-10 rounded-full object-cover border dark:border-white/10 border-gray-300"
           />
           <div className="overflow-hidden">
-            <h4 className="text-sm font-bold text-gray-800 truncate">{user?.name}</h4>
-            <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
+            <h4 className="text-sm font-bold dark:text-white text-gray-900 truncate">{user?.name}</h4>
+            <p className="text-xs dark:text-gray-500 text-gray-600 capitalize">{user?.role}</p>
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@ const Sidebar = ({ role, user, onLogout }) => {
               to={link.path}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition font-medium ${
                 isActive
-                  ? 'bg-purple-50 text-purple-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'dark:bg-[#b14e79]/10 bg-[#b14e79]/10 dark:text-[#b14e79] text-[#b14e79] dark:border dark:border-[#b14e79]/20 border border-[#b14e79]/20'
+                  : 'dark:text-gray-400 text-gray-700 dark:hover:bg-white/5 hover:bg-gray-100 dark:hover:text-gray-300 hover:text-gray-900'
               }`}
             >
               {link.icon}
@@ -68,10 +68,10 @@ const Sidebar = ({ role, user, onLogout }) => {
       </nav>
 
       {/* --- LOGOUT BUTTON --- */}
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t dark:border-white/10 border-gray-300 transition-colors duration-300">
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition font-medium"
+          className="w-full flex items-center gap-3 px-4 py-3 text-red-500 dark:hover:bg-red-500/10 hover:bg-red-50 rounded-lg transition font-medium dark:text-red-400"
         >
           <LogOut size={20} />
           Logout

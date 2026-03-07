@@ -139,79 +139,122 @@ const VendorDashboard = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8 transition-colors duration-300">
+    <div className="min-h-screen dark:bg-[#05070a] bg-gray-50 transition-colors duration-300">
+      <div className="container mx-auto px-6 py-8">
       
       {/* --- PROFILE HEADER --- */}
-      <div className="dark:bg-[#111622] bg-white rounded-2xl shadow-md border dark:border-white/5 border-gray-100 p-8 mb-10 flex flex-col md:flex-row items-center md:items-start gap-8 relative transition-colors duration-300">
+      <div className="dark:bg-[#111622] bg-white rounded-3xl shadow-lg border dark:border-white/10 border-gray-300 p-8 md:p-12 mb-12 relative overflow-hidden transition-colors duration-300">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-[#b14e79]/5 rounded-full -mr-20 -mt-20 pointer-events-none"></div>
         
-        {/* Profile Picture */}
-        <div className="relative group flex-shrink-0">
-          <img 
-            src={profileImage || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} 
-            alt="Vendor Profile" 
-            className="w-32 h-32 rounded-full object-cover border-4 dark:border-[#231018] border-[#f7edf2] dark:bg-[#190b11] bg-white shadow-sm"
-            onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"; }}
-          />
-          <button 
-             onClick={() => setShowEditModal(true)}
-             className="absolute bottom-0 right-0 bg-[#b14e79] text-white p-2.5 rounded-full shadow-lg hover:bg-[#8e3e61] transition border-2 border-white dark:border-[#111622]"
-             title="Change Photo"
-          >
-            <Camera size={16} />
-          </button>
-        </div>
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
+          {/* Profile Picture & Camera Button */}
+          <div className="flex justify-center md:col-span-1">
+            <div className="relative group flex-shrink-0">
+              <img 
+                src={profileImage || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} 
+                alt="Vendor Profile" 
+                className="w-40 h-40 rounded-full object-cover border-4 dark:border-[#231018] border-[#f7edf2] dark:bg-[#190b11] bg-white shadow-xl group-hover:shadow-2xl transition-shadow"
+                onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"; }}
+              />
+              <button 
+                 onClick={() => setShowEditModal(true)}
+                 className="absolute bottom-0 right-0 bg-[#b14e79] text-white p-3 rounded-full shadow-lg hover:bg-[#8e3e61] transition border-4 border-white dark:border-[#111622]"
+                 title="Change Photo"
+              >
+                <Camera size={18} />
+              </button>
+            </div>
+          </div>
 
-        {/* Info */}
-        <div className="flex-1 text-center md:text-left">
-          <h1 className="text-3xl font-bold dark:text-white text-gray-800 flex items-center justify-center md:justify-start gap-3">
-            {user?.name}
-            <button onClick={() => setShowEditModal(true)} className="dark:text-gray-400 text-gray-400 hover:text-[#b14e79] dark:hover:text-[#b14e79] transition">
-              <Edit2 size={20} />
-            </button>
-          </h1>
-          <p className="dark:text-gray-400 text-gray-500 mt-1">{user?.email}</p>
-          <p className="dark:text-gray-400 text-gray-500">{user?.phone || "No phone number added"}</p>
-        </div>
+          {/* Info Section */}
+          <div className="flex flex-col justify-start md:col-span-1">
+            <div className="mb-6">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold dark:text-white text-gray-800">
+                  {user?.name}
+                </h1>
+                <button 
+                  onClick={() => setShowEditModal(true)} 
+                  className="dark:text-gray-400 text-gray-400 hover:text-[#b14e79] dark:hover:text-[#b14e79] transition p-1 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg"
+                >
+                  <Edit2 size={20} />
+                </button>
+              </div>
+              <div className="space-y-1">
+                <p className="dark:text-gray-400 text-gray-600 text-center md:text-left font-medium">{user?.email}</p>
+                <p className="dark:text-gray-400 text-gray-600 text-center md:text-left font-medium">{user?.phone || "No phone number added"}</p>
+              </div>
+            </div>
+          </div>
 
-        {/* Stats */}
-        <div className="text-center md:text-right pt-4 md:pt-0 md:pl-8">
-          <div className="text-3xl font-bold text-[#b14e79]">{myServices.length}</div>
-          <div className="text-xs dark:text-gray-500 text-gray-500 font-bold uppercase tracking-wider">Active Services</div>
+          {/* Stats Section */}
+          <div className="flex justify-center md:justify-end md:col-span-1">
+            <div className="dark:bg-[#0a0d14]/50 bg-white rounded-2xl p-6 border dark:border-white/10 border-gray-300 text-center min-w-[160px]">
+              <div className="text-4xl font-bold text-[#b14e79] mb-2">{myServices.length}</div>
+              <div className="text-xs dark:text-gray-400 text-gray-600 font-bold uppercase tracking-widest">Active Services</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* --- SERVICES --- */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold dark:text-white text-gray-800">My Services</h2>
-        <Link to="/vendor/add-service" className="bg-[#b14e79] text-white px-5 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-[#8e3e61] transition">
-          <PlusCircle size={20} /> Add Service
-        </Link>
+      {/* --- SERVICES SECTION HEADER --- */}
+      <div className="mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 className="text-3xl font-bold dark:text-white text-gray-900 mb-1">My Services</h2>
+            <p className="text-sm dark:text-gray-400 text-gray-700">Manage and showcase your offerings</p>
+          </div>
+          <Link to="/vendor/add-service" className="bg-[#b14e79] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-[#8e3e61] transition shadow-md hover:shadow-lg w-full md:w-auto justify-center">
+            <PlusCircle size={20} /> Add Service
+          </Link>
+        </div>
       </div>
 
-      {loading ? <div className="text-center py-10 dark:text-gray-400">Loading...</div> : myServices.length === 0 ? (
-        <div className="text-center py-12 dark:bg-[#111622] bg-gray-50 rounded-xl border-2 border-dashed dark:border-white/10 border-gray-200">
-           <p className="dark:text-gray-400 text-gray-400 mb-4">No services listed yet.</p>
-           <Link to="/vendor/add-service" className="text-[#b14e79] font-bold hover:underline">List your first service</Link>
+      {loading ? (
+        <div className="text-center py-16 dark:text-gray-400 text-gray-600">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#b14e79]"></div>
+          <p className="mt-4">Loading your services...</p>
+        </div>
+      ) : myServices.length === 0 ? (
+        <div className="text-center py-16 dark:bg-[#111622] bg-white rounded-2xl border-2 border-dashed dark:border-white/10 border-gray-300">
+           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full dark:bg-[#0a0d14] bg-gray-200 mb-4">
+             <PlusCircle size={28} className="dark:text-gray-500 text-gray-400" />
+           </div>
+           <p className="dark:text-gray-400 text-gray-800 mb-4 font-medium text-lg">No services listed yet</p>
+           <p className="dark:text-gray-500 text-gray-700 mb-6">Start by adding your first service to get discovered by clients</p>
+           <Link to="/vendor/add-service" className="text-[#b14e79] font-bold hover:underline inline-block">Add your first service →</Link>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {myServices.map((service) => (
-            <div key={service._id} className="dark:bg-[#111622] bg-white rounded-xl shadow-sm hover:shadow-lg transition border dark:border-white/5 border-gray-100 overflow-hidden">
-              <div className="h-48 overflow-hidden relative dark:bg-[#0a0d14] bg-gray-100">
+            <div key={service._id} className="group dark:bg-[#111622] bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border dark:border-white/10 border-gray-300 overflow-hidden hover:border-[#b14e79]/30">
+              {/* Image Container */}
+              <div className="h-48 overflow-hidden relative dark:bg-[#0a0d14] bg-gray-200">
                 <img 
                   src={service.images[0] || "broken"} 
                   alt={service.name} 
-                  className="w-full h-full object-cover" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                   onError={(e) => { e.target.onerror = null; e.target.src = getFallbackImage(service.type); }}
                 />
-                <div className="absolute top-2 right-2 dark:bg-[#0a0d14]/90 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold dark:text-gray-300 text-gray-700 border dark:border-white/10">{service.type}</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute top-3 right-3 dark:bg-[#0a0d14]/95 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold dark:text-gray-200 text-gray-900 border dark:border-white/20 border-gray-400">{service.type}</div>
               </div>
-              <div className="p-5">
-                <h3 className="font-bold text-lg dark:text-white text-gray-800">{service.name}</h3>
-                <p className="text-sm dark:text-gray-400 text-gray-500 mb-4 flex items-center gap-1"><MapPin size={14}/> {service.location}</p>
-                <div className="flex justify-between items-center pt-3 border-t dark:border-white/5 border-gray-100">
-                  <span className="font-bold text-[#b14e79]">₹{service.price}</span>
-                  <button onClick={() => handleDeleteService(service._id)} className="text-red-400 hover:text-red-600 p-2 dark:hover:bg-red-900/20 hover:bg-red-50 rounded-full transition"><Trash2 size={18} /></button>
+              
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="font-bold text-lg dark:text-white text-gray-900 mb-2 group-hover:text-[#b14e79] transition-colors">{service.name}</h3>
+                <p className="text-sm dark:text-gray-400 text-gray-700 mb-4 flex items-center gap-2"><MapPin size={16} className="flex-shrink-0 text-[#b14e79]"/> {service.location}</p>
+                
+                {/* Footer */}
+                <div className="flex justify-between items-center pt-4 border-t dark:border-white/10 border-gray-300">
+                  <span className="font-bold text-lg text-[#b14e79]">₹{service.price}</span>
+                  <button 
+                    onClick={() => handleDeleteService(service._id)} 
+                    className="text-red-400 hover:text-red-600 p-2 dark:hover:bg-red-900/20 hover:bg-red-50 rounded-full transition duration-200"
+                    title="Delete service"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               </div>
             </div>
@@ -221,29 +264,73 @@ const VendorDashboard = () => {
 
       {/* --- EDIT MODAL --- */}
       {showEditModal && (
-        <div className="fixed inset-0 dark:bg-black/70 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
-          <div className="dark:bg-[#111622] bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl border dark:border-white/10">
+        <div className="fixed inset-0 dark:bg-black/70 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="dark:bg-[#111622] bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl border dark:border-white/10 border-gray-300">
+            {/* Header */}
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold dark:text-white text-gray-800">Edit Business Profile</h3>
-              <button onClick={() => setShowEditModal(false)} className="dark:text-gray-400 text-gray-400 hover:text-gray-600 dark:hover:text-white"><X size={24} /></button>
+              <h3 className="text-2xl font-bold dark:text-white text-gray-900">Edit Profile</h3>
+              <button 
+                onClick={() => setShowEditModal(false)} 
+                className="dark:text-gray-400 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5 p-2 rounded-lg transition"
+              >
+                <X size={24} />
+              </button>
             </div>
             
-            <form onSubmit={handleProfileUpdate} className="space-y-4">
-              <div className="dark:bg-[#0a0d14] bg-[#f7edf2] p-4 rounded-lg border dark:border-white/5 border-[#e0b8c9] text-center">
-                {profileImage && <img src={profileImage} className="w-20 h-20 rounded-full mx-auto mb-3 object-cover border-2 dark:border-white/10 border-[#e0b8c9]"/>}
-                <label className="block text-sm font-bold text-[#b14e79] mb-2 cursor-pointer dark:bg-[#111622] bg-white py-2 rounded border dark:border-white/10 border-[#e0b8c9] dark:hover:bg-[#1e2638] hover:bg-[#f7edf2] transition">
-                  Choose New Photo
+            {/* Form */}
+            <form onSubmit={handleProfileUpdate} className="space-y-5">
+              {/* Photo Section */}
+              <div className="dark:bg-[#0a0d14] bg-gray-100 p-6 rounded-2xl border dark:border-white/10 border-gray-300 text-center">
+                {profileImage && (
+                  <img 
+                    src={profileImage} 
+                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-3 dark:border-white/10 border-gray-400 shadow-md"
+                    alt="Preview"
+                  />
+                )}
+                <label className="block text-sm font-bold text-[#b14e79] mb-3 cursor-pointer dark:bg-[#111622] bg-gray-50 py-2.5 px-3 rounded-xl border dark:border-white/10 border-gray-300 dark:hover:bg-[#1e2638] hover:bg-gray-200 transition font-medium">
+                  📸 Choose New Photo
                   <input type="file" onChange={handleFileChange} accept="image/*" className="hidden" />
                 </label>
-                <p className="text-xs dark:text-gray-500 text-gray-500">Supports JPG, PNG</p>
+                <p className="text-xs dark:text-gray-500 text-gray-600">JPG or PNG, Max 5MB</p>
               </div>
-              <div><label className="block text-sm font-bold dark:text-gray-300 text-gray-700 mb-1">Business Name</label><input type="text" value={editFormData.name} onChange={(e) => setEditFormData({...editFormData, name: e.target.value})} className="w-full p-3 dark:bg-[#05070a] bg-white border dark:border-white/10 dark:text-white rounded-lg focus:ring-2 focus:ring-[#b14e79] outline-none" /></div>
-              <div><label className="block text-sm font-bold dark:text-gray-300 text-gray-700 mb-1">Phone Number</label><input type="text" value={editFormData.phone} onChange={(e) => setEditFormData({...editFormData, phone: e.target.value})} className="w-full p-3 dark:bg-[#05070a] bg-white border dark:border-white/10 dark:text-white rounded-lg focus:ring-2 focus:ring-[#b14e79] outline-none" /></div>
-              <button type="submit" className="w-full bg-[#b14e79] hover:bg-[#8e3e61] text-white font-bold py-3 rounded-lg transition mt-2">Save & Update</button>
+
+              {/* Input Fields */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-bold dark:text-gray-300 text-gray-900 mb-2">Business Name</label>
+                  <input 
+                    type="text" 
+                    value={editFormData.name} 
+                    onChange={(e) => setEditFormData({...editFormData, name: e.target.value})} 
+                    className="w-full p-3 dark:bg-[#05070a] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-xl focus:ring-2 focus:ring-[#b14e79] focus:border-transparent outline-none transition" 
+                    placeholder="Enter business name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold dark:text-gray-300 text-gray-900 mb-2">Phone Number</label>
+                  <input 
+                    type="text" 
+                    value={editFormData.phone} 
+                    onChange={(e) => setEditFormData({...editFormData, phone: e.target.value})} 
+                    className="w-full p-3 dark:bg-[#05070a] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-xl focus:ring-2 focus:ring-[#b14e79] focus:border-transparent outline-none transition" 
+                    placeholder="Enter phone number"
+                  />
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-[#b14e79] to-[#8e3e61] hover:from-[#8e3e61] hover:to-[#6a2f49] text-white font-bold py-3 rounded-xl transition shadow-lg shadow-[#b14e79]/20 mt-6"
+              >
+                Save Changes
+              </button>
             </form>
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

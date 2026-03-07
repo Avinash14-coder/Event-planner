@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Sparkles, Users, Heart, Target, Globe } from 'lucide-react';
+import { ChevronDown, ChevronUp, Users, Heart, Target, Globe } from 'lucide-react';
 import hrishikeshImg from '../../assets/hrishikesh.jpg';
 import avinashImg from '../../assets/avinash.jpg';
 import sanikaImg from '../../assets/sanika.jpg';
+import eventraLogo from '../../assets/eventra_logo.png';
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,8 +81,8 @@ const About = () => {
         <div className="absolute top-48 -left-24 w-72 h-72 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
         
         <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="inline-flex items-center justify-center p-3 mb-6 rounded-2xl dark:bg-white/5 bg-[#b14e79]/10 border dark:border-white/10 border-[#b14e79]/20 text-[#b14e79] backdrop-blur-md shadow-2xl">
-            <Sparkles size={24} />
+          <div className="inline-flex items-center justify-center p-3 mb-6 rounded-2xl dark:bg-white/5 bg-[#b14e79]/10 border dark:border-white/10 border-[#b14e79]/20 backdrop-blur-md shadow-2xl">
+            <img src={eventraLogo} alt="Eventra" className="h-8 w-auto" />
           </div>
           <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter leading-tight">
             Curating Unforgettable <span className="italic font-serif text-[#b14e79]">Experiences</span>

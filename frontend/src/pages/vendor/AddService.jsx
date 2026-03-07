@@ -57,25 +57,26 @@ const AddService = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto dark:bg-[#0a0d14] bg-white p-8 md:p-12 rounded-[2.5rem] border dark:border-white/5 border-gray-100 shadow-2xl my-10 transition-colors duration-300">
+    <div className="min-h-screen dark:bg-[#05070a] bg-gray-50 transition-colors duration-300 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto dark:bg-[#111622] bg-white p-8 md:p-12 rounded-3xl border dark:border-white/10 border-gray-300 shadow-lg transition-colors duration-300">
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-black dark:text-white text-gray-900 tracking-tighter uppercase italic">
           Publish <span className="text-[#b14e79]">New Service</span>
         </h1>
-        <p className="text-gray-500 mt-2 font-medium tracking-wide">Enter the details of your premium event offering.</p>
+        <p className="text-gray-600 dark:text-gray-400 mt-2 font-medium tracking-wide">Enter the details of your premium event offering.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Service Name */}
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
             <Tag size={14} className="text-[#b14e79]"/> Service Name
           </label>
           <input 
             name="name" 
             required 
             onChange={handleChange} 
-            className="w-full dark:bg-[#111622] bg-gray-50 border dark:border-white/5 border-gray-200 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] dark:focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#111622] transition-all font-medium" 
+            className="w-full dark:bg-[#0a0d14] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] dark:focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#0a0d14] transition-all font-medium" 
             placeholder="e.g. Royal Wedding Photography Package" 
           />
         </div>
@@ -83,7 +84,7 @@ const AddService = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Service Category Dropdown */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
               <Camera size={14} className="text-[#b14e79]"/> Category
             </label>
             <div className="relative">
@@ -92,7 +93,7 @@ const AddService = () => {
                 value={formData.type}
                 onChange={handleChange} 
                 required
-                className="w-full dark:bg-[#111622] bg-gray-50 border dark:border-white/5 border-gray-200 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#111622] transition-all appearance-none cursor-pointer font-medium"
+                className="w-full dark:bg-[#0a0d14] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#0a0d14] transition-all appearance-none cursor-pointer font-medium"
               >
                 <option value="" disabled className="text-gray-600">-- Choose Category --</option>
                 <optgroup label="Events & Venues" className="dark:bg-[#05070a] bg-white text-[#b14e79] font-bold">
@@ -116,7 +117,7 @@ const AddService = () => {
 
           {/* Price */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+            <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
               <IndianRupee size={14} className="text-[#b14e79]"/> Price (₹)
             </label>
             <input 
@@ -124,7 +125,7 @@ const AddService = () => {
               required 
               type="number" 
               onChange={handleChange} 
-              className="w-full dark:bg-[#111622] bg-gray-50 border dark:border-white/5 border-gray-200 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#111622] transition-all font-medium" 
+              className="w-full dark:bg-[#0a0d14] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#0a0d14] transition-all font-medium" 
               placeholder="0.00"
             />
           </div>
@@ -132,35 +133,35 @@ const AddService = () => {
 
         {/* Location */}
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
             <MapPin size={14} className="text-[#b14e79]"/> Location
           </label>
           <input 
             name="location" 
             required 
             onChange={handleChange} 
-            className="w-full dark:bg-[#111622] bg-gray-50 border dark:border-white/5 border-gray-200 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#111622] transition-all font-medium" 
+            className="w-full dark:bg-[#0a0d14] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#0a0d14] transition-all font-medium" 
             placeholder="e.g. Nashik, Maharashtra"
           />
         </div>
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
             <FileText size={14} className="text-[#b14e79]"/> Description
           </label>
           <textarea 
             name="description" 
             required 
             onChange={handleChange} 
-            className="w-full dark:bg-[#111622] bg-gray-50 border dark:border-white/5 border-gray-200 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#111622] transition-all font-medium min-h-[150px]" 
+            className="w-full dark:bg-[#0a0d14] bg-gray-50 border dark:border-white/10 border-gray-300 dark:text-white text-gray-900 rounded-2xl p-5 outline-none focus:border-[#b14e79] focus:ring-4 focus:ring-[#b14e79]/10 focus:bg-white dark:focus:bg-[#0a0d14] transition-all font-medium min-h-[150px]" 
             placeholder="Describe your premium service in detail..."
           ></textarea>
         </div>
         
         {/* File Upload Section */}
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-500 ml-2">
+          <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest dark:text-gray-400 text-gray-700 ml-2">
             <Upload size={14} className="text-[#b14e79]"/> Service Cover Image
           </label>
           <div className="relative group">
@@ -169,11 +170,11 @@ const AddService = () => {
               required 
               onChange={handleFileChange} 
               accept="image/*" 
-              className="w-full dark:bg-[#111622] bg-gray-50 border border-dashed dark:border-white/20 border-gray-300 text-gray-400 rounded-2xl p-10 cursor-pointer file:hidden text-center hover:border-[#b14e79] dark:hover:border-[#b14e79] focus:bg-white dark:focus:bg-[#111622] transition-all" 
+              className="w-full dark:bg-[#0a0d14] bg-gray-50 border border-dashed dark:border-white/20 border-gray-400 text-gray-400 rounded-2xl p-10 cursor-pointer file:hidden text-center hover:border-[#b14e79] dark:hover:border-[#b14e79] focus:bg-white dark:focus:bg-[#0a0d14] transition-all" 
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <Upload className="text-[#b14e79] mb-2" size={32} />
-              <p className="text-sm font-bold dark:text-gray-300 text-gray-700">
+              <p className="text-sm font-bold dark:text-gray-300 text-gray-800">
                 {file ? file.name : "Drop your image here or click to browse"}
               </p>
             </div>
@@ -188,6 +189,7 @@ const AddService = () => {
           {loading ? 'PUBLISHING EXCELLENCE...' : 'Publish Service'}
         </button>
       </form>
+      </div>
     </div>
   );
 };

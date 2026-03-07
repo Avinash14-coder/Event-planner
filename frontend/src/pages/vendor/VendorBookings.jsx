@@ -72,11 +72,12 @@ const VendorBookings = () => {
   };
 
   return (
-    <div className="transition-colors duration-300">
+    <div className="min-h-screen dark:bg-[#05070a] bg-gray-50 transition-colors duration-300 py-8 md:py-12">
+      <div className="container mx-auto px-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-black dark:text-white text-gray-800 tracking-tight">Booking Requests</h1>
-        <p className="dark:text-gray-400 text-gray-500 mt-1">Manage incoming reservation requests from customers</p>
+        <h1 className="text-3xl font-black dark:text-white text-gray-900 tracking-tight">Booking Requests</h1>
+        <p className="dark:text-gray-400 text-gray-700 mt-1">Manage incoming reservation requests from customers</p>
       </div>
 
       {/* Filter Tabs */}
@@ -88,7 +89,7 @@ const VendorBookings = () => {
             className={`px-5 py-2 rounded-xl font-bold text-sm capitalize transition-all ${
               filter === tab
                 ? 'bg-[#b14e79] text-white shadow-lg shadow-[#b14e79]/20'
-                : 'dark:bg-[#111622] bg-white dark:text-gray-400 text-gray-600 border dark:border-white/10 border-gray-200 dark:hover:border-[#b14e79] hover:border-[#b14e79] hover:text-[#b14e79] dark:hover:text-[#b14e79]'
+                : 'dark:bg-[#111622] bg-white dark:text-gray-400 text-gray-700 border dark:border-white/10 border-gray-300 dark:hover:border-[#b14e79] hover:border-[#b14e79] hover:text-[#b14e79] dark:hover:text-[#b14e79]'
             }`}
           >
             {tab} {counts[tab] > 0 && <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full ${filter === tab ? 'bg-white/20' : 'dark:bg-[#05070a] bg-gray-100'}`}>{counts[tab]}</span>}
@@ -100,9 +101,9 @@ const VendorBookings = () => {
       {loading ? (
         <div className="text-center py-20 text-[#b14e79] font-bold animate-pulse">Loading requests...</div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-20 dark:bg-[#111622] bg-gray-50 rounded-2xl border-2 border-dashed dark:border-white/10 border-gray-200 transition-colors">
-          <CalendarDays size={48} className="dark:text-gray-600 text-gray-300 mx-auto mb-4" />
-          <p className="dark:text-gray-500 text-gray-400 font-medium">No {filter !== 'all' ? filter : ''} booking requests yet.</p>
+        <div className="text-center py-20 dark:bg-[#111622] bg-white rounded-2xl border-2 border-dashed dark:border-white/10 border-gray-300 transition-colors">
+          <CalendarDays size={48} className="dark:text-gray-600 text-gray-400 mx-auto mb-4" />
+          <p className="dark:text-gray-500 text-gray-700 font-medium">No {filter !== 'all' ? filter : ''} booking requests yet.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -110,32 +111,32 @@ const VendorBookings = () => {
             const cfg = STATUS_CONFIG[booking.status];
             const StatusIcon = cfg.icon;
             return (
-              <div key={booking._id} className="dark:bg-[#111622] bg-white rounded-2xl border dark:border-white/5 border-gray-100 shadow-sm hover:shadow-md transition-all p-6">
+              <div key={booking._id} className="dark:bg-[#111622] bg-white rounded-2xl border dark:border-white/10 border-gray-300 shadow-sm hover:shadow-md transition-all p-6">
                 <div className="flex flex-col md:flex-row md:items-start gap-6">
 
                   {/* Left: Customer Info */}
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full dark:bg-white/5 bg-purple-100 flex items-center justify-center text-[#b14e79] font-black text-xl flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full dark:bg-white/5 bg-pink-100 flex items-center justify-center text-[#b14e79] font-black text-xl flex-shrink-0">
                         {booking.userName?.[0]?.toUpperCase()}
                       </div>
                       <div>
-                        <h3 className="font-bold dark:text-white text-gray-800 text-lg">{booking.userName}</h3>
-                        <p className="text-xs text-gray-400 font-medium">for: <span className="text-[#b14e79]">{booking.serviceName || booking.vendorName}</span></p>
+                        <h3 className="font-bold dark:text-white text-gray-900 text-lg">{booking.userName}</h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">for: <span className="text-[#b14e79]">{booking.serviceName || booking.vendorName}</span></p>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm dark:text-gray-400 text-gray-700">
                       <div className="flex items-center gap-2"><Mail size={14} className="text-[#b14e79] flex-shrink-0" />{booking.userEmail}</div>
                       {booking.userPhone && <div className="flex items-center gap-2"><Phone size={14} className="text-[#b14e79] flex-shrink-0" />{booking.userPhone}</div>}
-                      <div className="flex items-center gap-2"><CalendarDays size={14} className="text-[#b14e79] flex-shrink-0" /><span className="font-semibold dark:text-gray-300 text-gray-700">{new Date(booking.eventDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}</span></div>
-                      <div className="flex items-center gap-2 text-xs text-gray-400"><Clock size={12} />Received {new Date(booking.createdAt).toLocaleDateString('en-IN')}</div>
+                      <div className="flex items-center gap-2"><CalendarDays size={14} className="text-[#b14e79] flex-shrink-0" /><span className="font-semibold dark:text-gray-300 text-gray-800">{new Date(booking.eventDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}</span></div>
+                      <div className="flex items-center gap-2 text-xs dark:text-gray-500 text-gray-600"><Clock size={12} />Received {new Date(booking.createdAt).toLocaleDateString('en-IN')}</div>
                     </div>
 
                     {booking.message && (
-                      <div className="flex items-start gap-2 dark:bg-[#05070a] bg-gray-50 p-3 rounded-xl border dark:border-white/10 border-gray-100 transition-colors">
+                      <div className="flex items-start gap-2 dark:bg-[#0a0d14] bg-gray-50 p-3 rounded-xl border dark:border-white/10 border-gray-300 transition-colors">
                         <MessageSquare size={14} className="text-[#b14e79] mt-0.5 flex-shrink-0" />
-                        <p className="text-sm dark:text-gray-400 text-gray-600 italic">"{booking.message}"</p>
+                        <p className="text-sm dark:text-gray-400 text-gray-700 italic">"{booking.message}"</p>
                       </div>
                     )}
                   </div>
@@ -172,7 +173,7 @@ const VendorBookings = () => {
                         <a href={`https://wa.me/${(booking.userPhone || '919876543210').replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm">
                           <MessageSquare size={16} /> WhatsApp
                         </a>
-                        <a href={`tel:${(booking.userPhone || '919876543210').replace(/\D/g, '')}`} className="flex items-center gap-1.5 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm">
+                        <a href={`tel:${(booking.userPhone || '919876543210').replace(/\D/g, '')}`} className="flex items-center gap-1.5 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white bg-gray-200 hover:bg-gray-300 text-gray-900 px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm">
                           <Phone size={16} /> Call Customer
                         </a>
                       </div>
@@ -184,6 +185,7 @@ const VendorBookings = () => {
           })}
         </div>
       )}
+      </div>
     </div>
   );
 };

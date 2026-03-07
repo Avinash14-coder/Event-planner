@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import eventraLogo from '../../assets/eventra_logo.png';
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -68,9 +69,9 @@ const Login = ({ onLogin }) => {
           
           {/* Header */}
           <div className="text-center mb-8">
-            {/* UPDATED: Icon Circle & Color */}
-            <div className="w-16 h-16 dark:bg-[#231018] bg-[#efdce4] rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner text-[#b14e79]">
-               <Sparkles size={32} />
+            {/* Logo */}
+            <div className="w-16 h-16 dark:bg-[#231018] bg-[#efdce4] rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+               <img src={eventraLogo} alt="Eventra Logo" className="h-10 w-auto" />
             </div>
             <h2 className="text-3xl font-extrabold dark:text-white text-gray-900 mb-2">
               {isLoginMode ? "Welcome Back" : "Create Account"}
